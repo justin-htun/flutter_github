@@ -67,9 +67,7 @@ class UserView extends GetView<UserController> {
                       user: user,
                       onTap: () => Get.toNamed(Routes.USER_DETAIL,
                           arguments: {
-                            "heroTag": "gridTag$index",
-                            "user": user,
-                            "userName": user.login
+                            "userLogin": user.login
                           }),
                     );
                   })
@@ -84,9 +82,7 @@ class UserView extends GetView<UserController> {
                       user: user,
                       onTap: () => Get.toNamed(Routes.USER_DETAIL,
                           arguments: {
-                            "heroTag": "listTag$index",
-                            "user": user,
-                            "userName": user.login
+                            "userLogin": user.login
                           }),
                     );
                   }),

@@ -35,7 +35,7 @@ class UserDetailView extends GetView<UserDetailController> {
               // start loading data
               controller.currentPage.value += 1;
               controller.getAllRepos(
-                  isLoading: false, isLoadMore: true, userName: 'mojombo');
+                  isLoading: false, isLoadMore: true, userLogin: controller.userLogin.value);
             }
             if (!controller.isRefreshing.value &&
                 controller.scrollController.position

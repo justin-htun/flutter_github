@@ -15,10 +15,14 @@ class UserDetailController extends GetxController {
   final reachedMax = false.obs;
   final userDetailData = UserDetail().obs;
   var repoList = <Repo>[].obs;
+  var userLogin = "".obs;
 
   @override
   void onInit() {
-    getAllRepos( userName: "mojombo",isLoading: false, isLoadMore: false);
+    if(Get.arguments != null) {
+      userLogin.value = Get.arguments["userLogin"];
+      getAllRepos( userLogin: userLogin.value,isLoading: false, isLoadMore: false);
+    }
     super.onInit();
   }
 
@@ -26,8 +30,8 @@ class UserDetailController extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
     isRefreshing(true);
     currentPage.value = 0;
-    await fetchUserDetailData(userLogin: 'mojombo');
-    await getAllRepos( userName: "mojombo",isLoading: false, isLoadMore: false);
+    await fetchUserDetailData(userLogin: userLogin.value);
+    await getAllRepos( userLogin: userLogin.value,isLoading: false, isLoadMore: false);
     isRefreshing(false);
   }
 
@@ -49,10 +53,10 @@ class UserDetailController extends GetxController {
     });
   }
 
-  Future<void> getAllRepos({required String userName,bool isLoading = true, bool isLoadMore = false}) async {
+  Future<void> getAllRepos({required String userLogin,bool isLoading = true, bool isLoadMore = false}) async {
     isRepoLoading(isLoading);
     isLoadMoreRepos(isLoadMore);
-    userDetailProvider.getAllRepos(userName,currentPage.value).then((value) {
+    userDetailProvider.getAllRepos(userLogin,currentPage.value).then((value) {
       if (isLoadMore) {
         for (var element in value) {
           repoList.add(element);
