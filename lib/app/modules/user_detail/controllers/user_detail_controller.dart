@@ -21,6 +21,7 @@ class UserDetailController extends GetxController {
   void onInit() {
     if(Get.arguments != null) {
       userLogin.value = Get.arguments["userLogin"];
+      fetchUserDetailData(userLogin: userLogin.value);
       getAllRepos( userLogin: userLogin.value,isLoading: false, isLoadMore: false);
     }
     super.onInit();

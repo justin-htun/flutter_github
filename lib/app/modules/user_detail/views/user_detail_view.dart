@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:github/app/modules/user_detail/views/repo_item_view.dart';
 import 'package:github/app/modules/user_detail/views/user_detail_header_view.dart';
 import '../controllers/user_detail_controller.dart';
-import '../models/repo_model.dart';
 
 class UserDetailView extends GetView<UserDetailController> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -13,8 +12,7 @@ class UserDetailView extends GetView<UserDetailController> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       appBar: AppBar(
-        title: const Text('User Detail View'),
-        centerTitle: true,
+        title: const Text('User Detail'),
       ),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
@@ -48,12 +46,24 @@ class UserDetailView extends GetView<UserDetailController> {
             return true;
           },
           child: SingleChildScrollView(
+            padding: const EdgeInsets.only(top: 10,left: 15, right: 15),
             physics: const ScrollPhysics(),
             controller: controller.scrollController,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 UserDetailHeader(userDetail: controller.userDetailData.value,),
-                ListView.builder(
+                const SizedBox(height: 20,),
+                const Text(
+                  'Repositories',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                const SizedBox(height: 15,),
+                ListView.separated(
+                    separatorBuilder: (context, index) => const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Divider(),
+                    ),
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: controller.repoList.length,
