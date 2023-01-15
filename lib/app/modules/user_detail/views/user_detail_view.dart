@@ -48,27 +48,21 @@ class UserDetailView extends GetView<UserDetailController> {
             return true;
           },
           child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
+            physics: const ScrollPhysics(),
             controller: controller.scrollController,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  SizedBox(height: 100, child: UserDetailHeader(userDetail: controller.userDetailData.value,)),
-                  Expanded(
-                    child: ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: controller.repoList.length,
-                        itemBuilder: (context, index) {
-                          return RepoItem(
-                            repo:  controller.repoList[index],
-                          );
-                        }),
-                  ),
-                ],
-              ),
+            child: Column(
+              children: [
+                UserDetailHeader(userDetail: controller.userDetailData.value,),
+                ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: controller.repoList.length,
+                    itemBuilder: (context, index) {
+                      return RepoItem(
+                        repo:  controller.repoList[index],
+                      );
+                    }),
+              ],
             ),
           ),
         ),
