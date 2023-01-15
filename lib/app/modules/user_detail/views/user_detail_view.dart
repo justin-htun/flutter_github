@@ -17,7 +17,7 @@ class UserDetailView extends GetView<UserDetailController> {
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: controller.refreshUserDetailList,
-        child: controller.isRepoLoading.value
+        child: controller.isInitialLoading.value
             ? const Center(
           child: CircularProgressIndicator.adaptive(),
         )
@@ -53,16 +53,16 @@ class UserDetailView extends GetView<UserDetailController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 UserDetailHeader(userDetail: controller.userDetailData.value,),
-                const SizedBox(height: 20,),
+                const SizedBox(height: 10,),
                 const Text(
                   'Repositories',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(height: 20,),
                 ListView.separated(
-                    separatorBuilder: (context, index) => const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0),
-                      child: Divider(),
+                  padding: const EdgeInsets.only(bottom: 10),
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 10,
                     ),
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,

@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import '../../../widgets/common_image_view.dart';
 import '../models/user_detail_model.dart';
@@ -42,7 +44,7 @@ class UserDetailHeader extends StatelessWidget {
                     height: 10,
                   ),
                   Text(
-                    '${userDetail.name}',
+                    userDetail.name??"GitHub user",
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16),
                   ),
@@ -64,52 +66,133 @@ class UserDetailHeader extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 10,),
-        Row  (
+        const SizedBox(
+          height: 10,
+        ),
+        Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(Icons.person_rounded, color: Colors.black54,),
-            const SizedBox(width: 10,),
-
-            Text(
-              '${NumberFormat.compact().format(userDetail.followers)} followers',
+            const Icon(
+              FontAwesomeIcons.userGroup,
+              color: Colors.black54,
+              size: 18,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            RichText(
+              text: TextSpan(
+                  text:
+                      NumberFormat.compact().format(userDetail.followers ?? 0),
+                  style: const TextStyle(color: Colors.black),
+                  children: const [
+                    TextSpan(
+                      text: " followers",
+                      style: TextStyle(color: Colors.black54),
+                    )
+                  ]),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text (
+              child: Text(
                 '.',
               ),
-            ),            Text(
-              '${NumberFormat.compact().format(userDetail.following)} following',
-            )
-          ],
-        ),
-        Row  (
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Icon(Icons.person_rounded, color: Colors.black54,),
-            const SizedBox(width: 10,),
-            Text(
-              '${NumberFormat.compact().format(userDetail.publicRepos)} Repositories',
+            ),
+            RichText(
+              text: TextSpan(
+                  text: NumberFormat.compact().format(userDetail.following??0),
+                  style: const TextStyle(color: Colors.black),
+                  children: const [
+                    TextSpan(
+                      text: " following",
+                      style: TextStyle( color: Colors.black54),)
+                  ]),
             ),
           ],
         ),
-        Row  (
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const Icon(Icons.person_rounded, color: Colors.black54,),
-            const SizedBox(width: 10,),
-            Text(
-              '${NumberFormat.compact().format(userDetail.publicGists)} Stars',
+            const Icon(FontAwesomeIcons.bookBookmark,
+                color: Colors.black54, size: 18),
+            const SizedBox(
+              width: 10,
+            ),
+            RichText(
+              text: TextSpan(
+                  text: NumberFormat.compact().format(userDetail.publicRepos??0),
+                  style: const TextStyle(color: Colors.black),
+                  children: const [
+                    TextSpan(
+                      text: " Repositories",
+                      style: TextStyle( color: Colors.black54),)
+                  ]),
             ),
           ],
         ),
-        const SizedBox(height: 15,),
-        userInfoItem(Icons.location_city, "${userDetail.company}"),
-        userInfoItem(Icons.location_on_outlined, "${userDetail.location}"),
-        userInfoItem(Icons.mail_outline_sharp, "${userDetail.email}"),
-        userInfoItem(Icons.save_as_sharp, "${userDetail.blog}"),
-        userInfoItem(Icons.soap, "@${userDetail.twitterUsername}"),
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(FontAwesomeIcons.star, color: Colors.black54, size: 18),
+            const SizedBox(
+              width: 10,
+            ),
+            RichText(
+              text: TextSpan(
+                  text: NumberFormat.compact().format(userDetail.publicGists??0),
+                  style: const TextStyle(color: Colors.black),
+                  children: const [
+                    TextSpan(
+                      text: " Stars",
+                      style: TextStyle( color: Colors.black54),)
+                  ]),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 5,
+        ),
+        ListTileTheme(
+          contentPadding: const EdgeInsets.all(0),
+          child: ExpansionTile(
+              title: const Text(
+                'Contact info',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold, color: Colors.black87),
+              ),
+              children: <Widget>[
+                Visibility(
+                  visible: userDetail.company != null,
+                  child: userInfoItem(
+                      FontAwesomeIcons.building, "${userDetail.company}"),
+                ),
+                Visibility(
+                  visible: userDetail.location != null,
+                  child: userInfoItem(
+                      FontAwesomeIcons.locationDot, "${userDetail.location}"),
+                ),
+                Visibility(
+                    visible: userDetail.email != null,
+                    child: userInfoItem(FontAwesomeIcons.envelope, "${userDetail.email}")),
+                Visibility(
+                    visible: userDetail.blog != null,
+                    child: userInfoItem(FontAwesomeIcons.blog, "${userDetail.blog}")),
+                Visibility(
+                  visible: userDetail.twitterUsername != null,
+                  child: userInfoItem(
+                      FontAwesomeIcons.twitter, "@${userDetail.twitterUsername}"),
+                ),
+                const SizedBox(
+                  height: 10,
+                )
+              ]),
+        ),
       ],
     );
   }
@@ -117,11 +200,17 @@ class UserDetailHeader extends StatelessWidget {
   Widget userInfoItem(IconData iconData, String info) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: Row  (
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(iconData, color: Colors.black54,),
-          const SizedBox(width: 10,),
+          Icon(
+            iconData,
+            color: Colors.black54,
+            size: 20,
+          ),
+          const SizedBox(
+            width: 10,
+          ),
           Expanded(
             child: SelectableText(
               info,

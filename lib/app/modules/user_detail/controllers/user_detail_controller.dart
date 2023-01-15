@@ -10,7 +10,7 @@ class UserDetailController extends GetxController {
 
   var currentPage = 0.obs;
   final isRefreshing = false.obs;
-  final isRepoLoading = true.obs;
+  final isInitialLoading = true.obs;
   final isLoadMoreRepos = false.obs;
   final reachedMax = false.obs;
   final userDetailData = UserDetail().obs;
@@ -21,8 +21,7 @@ class UserDetailController extends GetxController {
   void onInit() {
     if(Get.arguments != null) {
       userLogin.value = Get.arguments["userLogin"];
-      fetchUserDetailData(userLogin: userLogin.value);
-      getAllRepos( userLogin: userLogin.value,isLoading: false, isLoadMore: false);
+      fetchUserDetailData(userLoginValue: userLogin.value);
     }
     super.onInit();
   }
@@ -31,31 +30,30 @@ class UserDetailController extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
     isRefreshing(true);
     currentPage.value = 0;
-    await fetchUserDetailData(userLogin: userLogin.value);
-    await getAllRepos( userLogin: userLogin.value,isLoading: false, isLoadMore: false);
+    await fetchUserDetailData(userLoginValue: userLogin.value);
     isRefreshing(false);
   }
 
-  Future<void> fetchUserDetailData({required String userLogin}) async {
-    isRepoLoading(true);
+  Future<void> fetchUserDetailData({required String userLoginValue}) async {
+    isInitialLoading(true);
     userDetailProvider
-        .fetchUserDetailData(userLogin)
+        .fetchUserDetailData(userLoginValue)
         .then(
           (value) async {
             userDetailData.value = value;
-            isRepoLoading(false);
-      },
+            isInitialLoading(false);
+            getAllRepos( userLogin: userLogin.value,isLoading: false, isLoadMore: false);
+          },
     ).catchError((error) {
       // AppUtil.showMessage(
       //     title: 'Error',
       //     message: "Fetch product detail data failed",
       //     alertType: AlertType.error);
-      isRepoLoading(false);
+      isInitialLoading(false);
     });
   }
 
   Future<void> getAllRepos({required String userLogin,bool isLoading = true, bool isLoadMore = false}) async {
-    isRepoLoading(isLoading);
     isLoadMoreRepos(isLoadMore);
     userDetailProvider.getAllRepos(userLogin,currentPage.value).then((value) {
       if (isLoadMore) {
@@ -66,10 +64,8 @@ class UserDetailController extends GetxController {
         repoList.value = value;
       }
       reachedMax.value = (value == []);
-      isRepoLoading(false);
       isLoadMoreRepos(false);
     }).catchError((onError) {
-      isRepoLoading(false);
       isLoadMoreRepos(false);
     });
   }

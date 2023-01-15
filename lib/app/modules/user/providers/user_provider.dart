@@ -7,7 +7,7 @@ class UserProvider {
   Future<List<User>> getAllUsers(int page) async {
     List<User> userList = [];
     try {
-      var response = await DIOService.createDio().get("/users?per_page=${ApiConfig.perPage}&page=$page");
+      var response = await DIOService.createDio().get("/users?per_page=100&page=$page");
       if (response.statusCode == 200) {
         var data = response.data;
         userList = List.from(data??{}).map((e)=>User.fromJson(e)).toList();

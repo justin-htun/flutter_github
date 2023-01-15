@@ -35,10 +35,9 @@ class UserView extends GetView<UserController> {
                         .userScrollDirection ==
                         ScrollDirection.reverse &&
                     !controller.reachedMax.value) {
-                  // start loading data
                   controller.currentPage.value += 1;
-                  controller.getAllUsers(
-                      isLoading: false, isLoadMore: true);
+                  // controller.getAllUsers(
+                  //     isLoading: false, isLoadMore: true);
                 }
                 if (!controller.isRefreshing.value &&
                     controller.scrollController.position

@@ -11,19 +11,28 @@ class RepoItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '${repo.name}',
-          style: const TextStyle(fontWeight: FontWeight.bold),
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: Colors.black38
         ),
-        const SizedBox(height: 7,),
-        SelectableText(
-          '${repo.htmlUrl}',
-          style: const TextStyle(color: Colors.black54, fontSize: 13),
-        )
-      ],
+        borderRadius: BorderRadius.circular(10)
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '${repo.name}',
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 7,),
+          SelectableText(
+            '${repo.htmlUrl}',
+            style: const TextStyle(color: Colors.black54, fontSize: 13),
+          )
+        ],
+      ),
     );
   }
 }
