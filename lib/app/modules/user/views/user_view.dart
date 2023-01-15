@@ -16,7 +16,7 @@ class UserView extends GetView<UserController> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
           appBar: AppBar(
-            title: Text('UserView'),
+            title: const Text('GitHub User List'),
             centerTitle: true,
           ),
           body: RefreshIndicator(
@@ -54,12 +54,13 @@ class UserView extends GetView<UserController> {
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: controller.isGridView.value
                     ? GridView.builder(
+                  padding: EdgeInsets.only(top: 5),
                     controller: controller.scrollController,
                     itemCount: controller.userList.length,
                     gridDelegate:
                     const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
-                        childAspectRatio: 1,
+                        childAspectRatio: 0.9,
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10),
                     itemBuilder: (context, index) {
@@ -93,6 +94,7 @@ class UserView extends GetView<UserController> {
         onPressed: () {
           controller.changeUserView();
         },
+        backgroundColor:  Colors.black87,
         child: Icon(controller.isGridView.value
             ? Icons.menu
             : Icons.grid_view_sharp),

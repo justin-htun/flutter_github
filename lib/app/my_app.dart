@@ -19,10 +19,19 @@ class _AppState extends State<MyApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-          primaryColor: primaryColor,
-          scaffoldBackgroundColor: spaceGreyLightColor,
-          textTheme:
-          const TextTheme(displayMedium: TextStyle(fontSize: 20))),
+        primarySwatch: primaryColor,
+        scaffoldBackgroundColor: spaceGreyLightColor,
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+            fontSize: 18,
+            color: Colors.white,
+          ),
+          iconTheme: IconThemeData(color: Colors.white, size: 23),
+          backgroundColor: Colors.black87,
+          elevation: 0,
+          systemOverlayStyle: SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+        ),
+      ),
       title: appName,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
