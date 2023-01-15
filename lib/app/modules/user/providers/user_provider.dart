@@ -4,8 +4,6 @@ import '../../../../services/dio_service.dart';
 import '../models/user_model.dart';
 
 class UserProvider {
-  final DIOService dioService = DIOService();
-
   Future<List<User>> getAllUsers(int page) async {
     List<User> userList = [];
     try {
