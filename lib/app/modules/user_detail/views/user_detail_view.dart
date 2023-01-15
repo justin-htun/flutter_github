@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:github/app/modules/user_detail/views/repo_item_view.dart';
+import 'package:github/app/modules/user_detail/views/user_detail_header_view.dart';
 import '../controllers/user_detail_controller.dart';
 import '../models/repo_model.dart';
 
@@ -12,7 +13,7 @@ class UserDetailView extends GetView<UserDetailController> {
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
       appBar: AppBar(
-        title: Text('User Detail View'),
+        title: const Text('User Detail View'),
         centerTitle: true,
       ),
       body: RefreshIndicator(
@@ -46,16 +47,30 @@ class UserDetailView extends GetView<UserDetailController> {
             }
             return true;
           },
-          child: ListView.builder(
-              physics: const AlwaysScrollableScrollPhysics(),
-              controller: controller.scrollController,
-              itemCount: controller.repoList.length,
-              itemBuilder: (context, index) {
-                Repo repo = controller.repoList[index];
-                return RepoItem(
-                  repo: repo,
-                );
-              }),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            controller: controller.scrollController,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 100, child: UserDetailHeader(userDetail: controller.userDetailData.value,)),
+                  Expanded(
+                    child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        itemCount: controller.repoList.length,
+                        itemBuilder: (context, index) {
+                          return RepoItem(
+                            repo:  controller.repoList[index],
+                          );
+                        }),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
       bottomNavigationBar: Visibility(

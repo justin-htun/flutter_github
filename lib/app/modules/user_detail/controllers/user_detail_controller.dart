@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../models/repo_model.dart';
+import '../models/user_detail_model.dart';
 import '../providers/user_detail_provider.dart';
 
 class UserDetailController extends GetxController {
@@ -12,6 +13,7 @@ class UserDetailController extends GetxController {
   final isRepoLoading = true.obs;
   final isLoadMoreRepos = false.obs;
   final reachedMax = false.obs;
+  final userDetailData = UserDetail().obs;
   var repoList = <Repo>[].obs;
 
   @override
@@ -24,8 +26,27 @@ class UserDetailController extends GetxController {
     await Future.delayed(const Duration(seconds: 1));
     isRefreshing(true);
     currentPage.value = 0;
+    await fetchUserDetailData(userLogin: 'mojombo');
     await getAllRepos( userName: "mojombo",isLoading: false, isLoadMore: false);
     isRefreshing(false);
+  }
+
+  Future<void> fetchUserDetailData({required String userLogin}) async {
+    isRepoLoading(true);
+    userDetailProvider
+        .fetchUserDetailData(userLogin)
+        .then(
+          (value) async {
+            userDetailData.value = value;
+            isRepoLoading(false);
+      },
+    ).catchError((error) {
+      // AppUtil.showMessage(
+      //     title: 'Error',
+      //     message: "Fetch product detail data failed",
+      //     alertType: AlertType.error);
+      isRepoLoading(false);
+    });
   }
 
   Future<void> getAllRepos({required String userName,bool isLoading = true, bool isLoadMore = false}) async {
