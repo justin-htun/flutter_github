@@ -50,42 +50,43 @@ class UserView extends GetView<UserController> {
                 }
                 return true;
               },
-              child: controller.isGridView.value
-                  ? GridView.builder(
-                  controller: controller.scrollController,
-                  itemCount: controller.userList.length,
-                  gridDelegate:
-                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 200,
-                      childAspectRatio: 1,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemBuilder: (context, index) {
-                    User user = controller.userList[index];
-                    return UserGridItem(
-                      heroTag: "gridTag$index",
-                      user: user,
-                      onTap: () => Get.toNamed(Routes.USER_DETAIL,
-                          arguments: {
-                            "userLogin": user.login
-                          }),
-                    );
-                  })
-                  : ListView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  controller: controller.scrollController,
-                  itemCount: controller.userList.length,
-                  itemBuilder: (context, index) {
-                    User user = controller.userList[index];
-                    return UserListItem(
-                      heroTag: "listTag$index",
-                      user: user,
-                      onTap: () => Get.toNamed(Routes.USER_DETAIL,
-                          arguments: {
-                            "userLogin": user.login
-                          }),
-                    );
-                  }),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: controller.isGridView.value
+                    ? GridView.builder(
+                    controller: controller.scrollController,
+                    itemCount: controller.userList.length,
+                    gridDelegate:
+                    const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 200,
+                        childAspectRatio: 1,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10),
+                    itemBuilder: (context, index) {
+                      User user = controller.userList[index];
+                      return UserGridItem(
+                        user: user,
+                        onTap: () => Get.toNamed(Routes.USER_DETAIL,
+                            arguments: {
+                              "userLogin": user.login
+                            }),
+                      );
+                    })
+                    : ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    controller: controller.scrollController,
+                    itemCount: controller.userList.length,
+                    itemBuilder: (context, index) {
+                      User user = controller.userList[index];
+                      return UserListItem(
+                        user: user,
+                        onTap: () => Get.toNamed(Routes.USER_DETAIL,
+                            arguments: {
+                              "userLogin": user.login
+                            }),
+                      );
+                    }),
+              ),
             ),
           ),
       floatingActionButton: Obx(() => FloatingActionButton(

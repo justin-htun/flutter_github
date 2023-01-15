@@ -7,12 +7,10 @@ class UserGridItem extends StatelessWidget {
   const UserGridItem(
       {Key? key,
         this.onTap,
-        required this.user,
-        required this.heroTag})
+        required this.user})
       : super(key: key);
 
   final Function()? onTap;
-  final String heroTag;
   final User user;
 
   @override
@@ -31,21 +29,18 @@ class UserGridItem extends StatelessWidget {
                   flex: 1,
                   child: Container(
                       color: Colors.white,
-                      child: Hero(
-                        tag: heroTag,
-                        child: Center(
-                          child: user.avatarUrl != null ? Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10),
-                            child: Image.network(
-                              user.avatarUrl!,
-                            ),
-                          )
-                              : const Icon(
-                            Icons.camera_alt,
-                            size: 80,
-                            color: Colors.grey,
+                      child: Center(
+                        child: user.avatarUrl != null ? Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10),
+                          child: Image.network(
+                            user.avatarUrl!,
                           ),
+                        )
+                            : const Icon(
+                          Icons.camera_alt,
+                          size: 80,
+                          color: Colors.grey,
                         ),
                       )),
                 ),
