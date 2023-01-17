@@ -51,7 +51,7 @@ class UserListItem extends StatelessWidget {
                     height: 10,
                   ),
                   SelectableText(
-                    '${user.url}',
+                    '${user.htmlUrl}',
                     style: const TextStyle(color: Colors.black54, fontSize: 13),
                   )
                 ],
