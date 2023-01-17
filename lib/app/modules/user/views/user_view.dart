@@ -38,6 +38,7 @@ class UserView extends GetView<UserController> {
                   controller.currentPage.value += 1;
                   // controller.getAllUsers(
                   //     isLoading: false, isLoadMore: true);
+                   /*User list API "https://api.github.com/users?per_page=10&page=1" is not working properly. That is why, pagination integrating is commented :(.*/
                 }
                 if (!controller.isRefreshing.value &&
                     controller.scrollController.position
