@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:social_share/social_share.dart';
 
 import '../../../widgets/common_image_view.dart';
 import '../models/user_model.dart';
@@ -23,41 +25,47 @@ class UserGridItem extends StatelessWidget {
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                margin: const EdgeInsets.only(top: 5),
-                child: user.avatarUrl != null ? ImageView(
-                  url: user.avatarUrl!,
-                  fit: BoxFit.cover,
-                  width: 80.0,
-                  height: 80.0,
-                  radius: 20,
-                )
-                    : const Icon(
-                  Icons.camera_alt,
-                  size: 80,
-                  color: Colors.grey,
-                ),
-              ),
-              Column(
+              Stack(
                 children: [
-                  Text(
-                    '#${user.login}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  Center(
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      child: ImageView(
+                        url: user.avatarUrl??"",
+                        fit: BoxFit.cover,
+                        width: 80.0,
+                        height: 80.0,
+                        radius: 20,
+                      )
+                    ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SelectableText(
-                    '${user.htmlUrl}',
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.black54, fontSize: 13),
-                  ),
-                  const SizedBox(
-                    height: 10,
+                  Positioned(
+                    top: 10.0,
+                    right: 10.0,
+                    child: InkWell (
+                      onTap: () {
+                        SocialShare.shareOptions(user.htmlUrl??"");
+                      },
+                      child: const Icon(
+                        FontAwesomeIcons.shareFromSquare,
+                        color: Colors.blueGrey,
+                        size: 18,
+                      ),
+                    ),
                   ),
                 ],
-              )
+              ),
+              Text(
+                '#${user.login}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SelectableText(
+                '${user.htmlUrl}',
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.black54, fontSize: 13),
+              ),
+              Container()
             ]),
       ),
     );

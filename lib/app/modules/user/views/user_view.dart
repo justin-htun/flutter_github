@@ -51,18 +51,18 @@ class UserView extends GetView<UserController> {
                 return true;
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: controller.isGridView.value
                     ? GridView.builder(
-                  padding: EdgeInsets.only(top: 5),
+                  padding: const EdgeInsets.only(top: 5),
                     controller: controller.scrollController,
                     itemCount: controller.userList.length,
                     gridDelegate:
                     const SliverGridDelegateWithMaxCrossAxisExtent(
                         maxCrossAxisExtent: 200,
                         childAspectRatio: 0.9,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10),
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 5),
                     itemBuilder: (context, index) {
                       User user = controller.userList[index];
                       return UserGridItem(
