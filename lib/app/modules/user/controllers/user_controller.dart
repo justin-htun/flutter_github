@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
+import '../../../../config/app_config.dart';
+import '../../../../services/db_service.dart';
 import '../models/user_model.dart';
 import '../providers/user_provider.dart';
 
@@ -16,9 +21,11 @@ class UserController extends GetxController {
   final isLoadMoreUsers = false.obs;
   final isGridView = false.obs;
   var userList = <User>[].obs;
+  //var listBox = Hive.box(user_list_box);
 
   @override
-  void onInit() {
+  Future<void> onInit() async {
+  //  await Hive.openBox(user_list_box);
     getAllUsers();
     super.onInit();
   }
@@ -45,9 +52,13 @@ class UserController extends GetxController {
         userList.value = value;
       }
       reachedMax.value = (value == []);
+      AppDatabase().setUsers(userList.value);
+      userList.value = AppDatabase().getAllUsers();
       isUserLoading(false);
       isLoadMoreUsers(false);
     }).catchError((onError) {
+      userList.value =  AppDatabase().getAllUsers();
+      reachedMax(true);
       isUserLoading(false);
       isLoadMoreUsers(false);
     });

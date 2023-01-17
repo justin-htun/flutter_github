@@ -1,20 +1,14 @@
 import 'package:get/get.dart';
+import '../../../../services/db_service.dart';
+import '../../../routes/app_pages.dart';
 
 class SplashController extends GetxController {
-  //TODO: Implement SplashController
-
-  final count = 0.obs;
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    await AppDatabase().initialize();
+    Future.delayed(const Duration(seconds: 1), () {
+      Get.offAllNamed(Routes.USER);
+    });
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

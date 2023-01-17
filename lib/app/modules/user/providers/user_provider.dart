@@ -14,6 +14,7 @@ class UserProvider {
       }
     } catch (error) {
       log('error => $error');
+      throw Exception(error);
     }
     return userList;
   }

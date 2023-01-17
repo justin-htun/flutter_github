@@ -35,7 +35,7 @@ class ImageView extends StatelessWidget {
           );
         },
         errorWidget: (context, url, error) => Image.asset(
-          "assets/icons/mz_logo_red.png",
+          "assets/images/github_bg.png",
           fit: BoxFit.contain,
         ),
         fit: fit,
