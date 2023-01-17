@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'package:get/get.dart';
+import 'package:github/app/modules/user/views/user_appbar.dart';
 import 'package:github/app/modules/user/views/user_grid_item_view.dart';
 import 'package:github/app/modules/user/views/user_list_item_view.dart';
 import 'package:github/config/api_config.dart';
@@ -15,10 +16,7 @@ class UserView extends GetView<UserController> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Scaffold(
-          appBar: AppBar(
-            title: const Text('GitHub User List'),
-            centerTitle: true,
-          ),
+          appBar: buildUserAppBar(controller),
           body: RefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: controller.refreshUserList,
@@ -51,7 +49,7 @@ class UserView extends GetView<UserController> {
                 return true;
               },
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5),
                 child: controller.isGridView.value
                     ? GridView.builder(
                   padding: const EdgeInsets.only(top: 5),

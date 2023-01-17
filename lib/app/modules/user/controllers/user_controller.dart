@@ -1,10 +1,7 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 
-import '../../../../config/app_config.dart';
 import '../../../../services/db_service.dart';
 import '../models/user_model.dart';
 import '../providers/user_provider.dart';
