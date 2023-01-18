@@ -9,10 +9,12 @@ class UserListItem extends StatelessWidget {
   const UserListItem(
       {Key? key,
         this.onTap,
+        this.onFavouriteTap,
         required this.user,})
       : super(key: key);
 
   final Function()? onTap;
+  final Function()? onFavouriteTap;
   final User user;
 
   @override
@@ -51,6 +53,15 @@ class UserListItem extends StatelessWidget {
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
+                        InkWell (
+                          onTap: onFavouriteTap,
+                          child: Icon(
+                            user.favourite? FontAwesomeIcons.solidStar :FontAwesomeIcons.star,
+                            color: user.favourite? Colors.redAccent : Colors.blueGrey,
+                            size: 18,
+                          ),
+                        ),
+                        const SizedBox(width: 20,),
                         InkWell (
                           onTap: () {
                             SocialShare.shareOptions(user.htmlUrl??"");

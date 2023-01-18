@@ -18,13 +18,17 @@ class AppDatabase {
     Hive.box<User>(user_list_box).add(user);
   }
 
-  Future replaceAllUser(List<User> userList) async {
+  // Future updateUser(User user) async {
+  //   user.save();
+  // }
+
+  Future update(List<User> userList) async {
     Hive.box<User>(user_list_box).clear();
     Hive.box<User>(user_list_box).addAll(userList);
   }
 
   List<User> getAllUsers() {
-    return Hive.box<User>(user_list_box).values.toList();
+    return Hive.box<User>(user_list_box).values.toList().cast<User>();
   }
 
   Future deleteAllUsers () async{

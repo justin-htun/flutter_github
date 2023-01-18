@@ -70,6 +70,7 @@ class UserView extends GetView<UserController> {
                             arguments: {
                               "userLogin": user.name
                             }),
+                          onFavouriteTap: () => controller.changetFavoriteStatus(user)
                       );
                     })
                     : ListView.builder(
@@ -84,6 +85,7 @@ class UserView extends GetView<UserController> {
                             arguments: {
                               "userLogin": user.name
                             }),
+                          onFavouriteTap: () => controller.changetFavoriteStatus(user)
                       );
                     }),
               ),

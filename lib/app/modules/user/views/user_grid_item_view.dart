@@ -10,10 +10,12 @@ class UserGridItem extends StatelessWidget {
   const UserGridItem(
       {Key? key,
         this.onTap,
+        this.onFavouriteTap,
         required this.user})
       : super(key: key);
 
   final Function()? onTap;
+  final Function()? onFavouriteTap;
   final User user;
 
   @override
@@ -42,15 +44,28 @@ class UserGridItem extends StatelessWidget {
                   Positioned(
                     top: 10.0,
                     right: 10.0,
-                    child: InkWell (
-                      onTap: () {
-                        SocialShare.shareOptions(user.htmlUrl??"");
-                      },
-                      child: const Icon(
-                        FontAwesomeIcons.shareFromSquare,
-                        color: Colors.blueGrey,
-                        size: 18,
-                      ),
+                    child: Column(
+                      children: [
+                        InkWell (
+                          onTap: () {
+                            SocialShare.shareOptions(user.htmlUrl??"");
+                          },
+                          child: const Icon(
+                            FontAwesomeIcons.shareFromSquare,
+                            color: Colors.blueGrey,
+                            size: 18,
+                          ),
+                        ),
+                        const SizedBox(height: 15,),
+                        InkWell (
+                          onTap: onFavouriteTap,
+                          child: Icon(
+                            user.favourite? FontAwesomeIcons.solidStar :FontAwesomeIcons.star,
+                            color: user.favourite? Colors.redAccent : Colors.blueGrey,
+                            size: 18,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

@@ -63,4 +63,10 @@ class UserController extends GetxController {
       isLoadMoreUsers(false);
     });
   }
+
+  Future changetFavoriteStatus (User user) async {
+    user.favourite = !user.favourite;
+    await AppDatabase().update(userList.value);
+    userList.value = AppDatabase().getAllUsers();
+  }
 }
