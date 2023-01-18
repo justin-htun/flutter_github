@@ -9,6 +9,7 @@ import 'package:github/config/api_config.dart';
 
 import '../../../routes/app_pages.dart';
 import '../controllers/user_controller.dart';
+import '../models/user.dart';
 import '../models/user_model.dart';
 
 class UserView extends GetView<UserController> {
@@ -67,7 +68,7 @@ class UserView extends GetView<UserController> {
                         user: user,
                         onTap: () => Get.toNamed(Routes.USER_DETAIL,
                             arguments: {
-                              "userLogin": user.login
+                              "userLogin": user.name
                             }),
                       );
                     })
@@ -81,7 +82,7 @@ class UserView extends GetView<UserController> {
                         user: user,
                         onTap: () => Get.toNamed(Routes.USER_DETAIL,
                             arguments: {
-                              "userLogin": user.login
+                              "userLogin": user.name
                             }),
                       );
                     }),

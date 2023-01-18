@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_share/social_share.dart';
 
 import '../../../widgets/common_image_view.dart';
-import '../models/user_model.dart';
+import '../models/user.dart';
 
 class UserListItem extends StatelessWidget {
   const UserListItem(
@@ -47,7 +47,7 @@ class UserListItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            '#${user.login}',
+                            '#${user.name}',
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),

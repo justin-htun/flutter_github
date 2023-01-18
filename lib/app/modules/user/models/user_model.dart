@@ -1,5 +1,5 @@
-class User {
-  User({
+class UserRes {
+  UserRes({
      this.login,
      this.id,
      this.nodeId,
@@ -38,7 +38,7 @@ class User {
    String? type;
    bool? siteAdmin;
 
-  User.fromJson(Map<String, dynamic> json){
+  UserRes.fromJson(Map<String, dynamic> json){
     login = json['login'];
     id = json['id'];
     nodeId = json['node_id'];

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../services/db_service.dart';
+import '../models/user.dart';
 import '../models/user_model.dart';
 import '../providers/user_provider.dart';
 
@@ -18,11 +19,9 @@ class UserController extends GetxController {
   final isLoadMoreUsers = false.obs;
   final isGridView = false.obs;
   var userList = <User>[].obs;
-  //var listBox = Hive.box(user_list_box);
 
   @override
   Future<void> onInit() async {
-  //  await Hive.openBox(user_list_box);
     getAllUsers();
     super.onInit();
   }
@@ -41,15 +40,19 @@ class UserController extends GetxController {
     isUserLoading(isLoading);
     isLoadMoreUsers(isLoadMore);
     userProvider.getAllUsers(currentPage.value).then((value) {
-      if (isLoadMore) {
-        for (var element in value) {
-          userList.add(element);
-        }
-      } else {
-        userList.value = value;
+      if (!isLoadMore) {
+        AppDatabase().deleteAllUsers();
+      }
+      for (var element in value) {
+        final user = User()
+          ..id = element.id??0
+          ..avatarUrl = element.avatarUrl??""
+          ..name = element.login??""
+          ..htmlUrl = element.htmlUrl??""
+          ..favourite = false;
+        AppDatabase().addUser(user);
       }
       reachedMax.value = (value == []);
-      AppDatabase().setUsers(userList.value);
       userList.value = AppDatabase().getAllUsers();
       isUserLoading(false);
       isLoadMoreUsers(false);
