@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../services/db_service.dart';
 import '../models/user.dart';
 import '../providers/user_provider.dart';
@@ -60,7 +58,7 @@ class UserController extends GetxController {
         tempUserList.add(user);
       }
       reachedMax.value = (value == []);
-      userList.value = await AppDatabase().updateAllUsers(tempUserList);
+      userList.value = await AppDatabase().update(tempUserList);
       userListAlias.clear();
       userListAlias.addAll(userList);
       isUserLoading(false);
@@ -77,7 +75,7 @@ class UserController extends GetxController {
 
   Future changetFavoriteStatus (User user) async {
     user.favourite = !user.favourite;
-    userList.value = await AppDatabase().updateAllUsers(userList);
+    userList.value = await AppDatabase().update(userList);
     userListAlias.clear();
     userListAlias.addAll(userList);
   }

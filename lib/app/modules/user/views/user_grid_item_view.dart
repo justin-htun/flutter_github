@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_share/social_share.dart';
-
 import '../../../widgets/common_image_view.dart';
 import '../models/user.dart';
 
@@ -47,21 +45,21 @@ class UserGridItem extends StatelessWidget {
                     child: Column(
                       children: [
                         InkWell (
+                          onTap: onFavouriteTap,
+                          child: Icon(
+                            user.favourite? FontAwesomeIcons.solidStar :FontAwesomeIcons.star,
+                            color: user.favourite? Colors.redAccent : Colors.blueGrey,
+                            size: 18,
+                          ),
+                        ),
+                        const SizedBox(height: 15,),
+                        InkWell (
                           onTap: () {
                             SocialShare.shareOptions(user.htmlUrl??"");
                           },
                           child: const Icon(
                             FontAwesomeIcons.shareFromSquare,
                             color: Colors.blueGrey,
-                            size: 18,
-                          ),
-                        ),
-                        const SizedBox(height: 15,),
-                        InkWell (
-                          onTap: onFavouriteTap,
-                          child: Icon(
-                            user.favourite? FontAwesomeIcons.solidStar :FontAwesomeIcons.star,
-                            color: user.favourite? Colors.redAccent : Colors.blueGrey,
                             size: 18,
                           ),
                         ),
@@ -76,7 +74,7 @@ class UserGridItem extends StatelessWidget {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               SelectableText(
-                '${user.htmlUrl}',
+                user.htmlUrl,
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.black54, fontSize: 13),
               ),

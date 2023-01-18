@@ -5,12 +5,9 @@ import 'package:get/get.dart';
 import 'package:github/app/modules/user/views/user_appbar.dart';
 import 'package:github/app/modules/user/views/user_grid_item_view.dart';
 import 'package:github/app/modules/user/views/user_list_item_view.dart';
-import 'package:github/config/api_config.dart';
-
 import '../../../routes/app_pages.dart';
 import '../controllers/user_controller.dart';
 import '../models/user.dart';
-import '../models/user_model.dart';
 
 class UserView extends GetView<UserController> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();

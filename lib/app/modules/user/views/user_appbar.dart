@@ -9,9 +9,6 @@ AppBar buildUserAppBar(UserController controller) {
       height: 45,
       child: TextField(
         controller: controller.searchTextController,
-        // onChanged: (value) {
-        //   controller.search(value);
-        // },
         decoration: InputDecoration(
           prefixIcon: const Icon(
             Icons.search,

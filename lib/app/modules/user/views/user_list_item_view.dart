@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:social_share/social_share.dart';
-
 import '../../../widgets/common_image_view.dart';
 import '../models/user.dart';
 
@@ -27,17 +26,12 @@ class UserListItem extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              user.avatarUrl != null? ImageView(
-                url: user.avatarUrl!,
+              ImageView(
+                url: user.avatarUrl??"",
                 fit: BoxFit.cover,
                 width: 80.0,
                 height: 80.0,
                 radius: 100,
-              )
-                  : const Icon(
-                Icons.camera_alt,
-                color: Colors.grey,
-                size: 80,
               ),
               const SizedBox(width: 20,),
               Expanded(
@@ -78,7 +72,7 @@ class UserListItem extends StatelessWidget {
                       height: 10,
                     ),
                     SelectableText(
-                      '${user.htmlUrl}',
+                      user.htmlUrl,
                       style: const TextStyle(color: Colors.black54, fontSize: 13),
                     )
                   ],
