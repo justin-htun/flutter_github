@@ -15,7 +15,7 @@ class AppDatabase {
   }
 
   Future addUser(User user) async {
-    Hive.box<User>(user_list_box).add(user);
+   await Hive.box<User>(user_list_box).add(user);
   }
 
   // Future updateUser(User user) async {

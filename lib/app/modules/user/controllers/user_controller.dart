@@ -45,8 +45,7 @@ class UserController extends GetxController {
     isUserLoading(isLoading);
     isLoadMoreUsers(isLoadMore);
     userProvider.getAllUsers(currentPage.value).then((value) async {
-
-      AppDatabase().deleteAllUsers();
+      List<User> oldDbData = AppDatabase().getAllUsers();
       List<User> tempUserList = [];
       for (var element in value) {
         final user = User()
@@ -55,6 +54,9 @@ class UserController extends GetxController {
           ..name = element.login??""
           ..htmlUrl = element.htmlUrl??""
           ..favourite = false;
+        user.favourite = oldDbData.firstWhere((element) => element.id == user.id,orElse: () {
+          return User()..favourite= false;
+        }).favourite;
         tempUserList.add(user);
       }
       reachedMax.value = (value == []);
