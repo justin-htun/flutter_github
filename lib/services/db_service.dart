@@ -22,13 +22,14 @@ class AppDatabase {
   //   user.save();
   // }
 
-  Future update(List<User> userList) async {
-    Hive.box<User>(user_list_box).clear();
-    Hive.box<User>(user_list_box).addAll(userList);
+  Future<List<User>> updateAllUsers(List<User> userList) async {
+    await Hive.box<User>(user_list_box).clear();
+    await Hive.box<User>(user_list_box).addAll(userList);
+    return Hive.box<User>(user_list_box).values.toList();
   }
 
   List<User> getAllUsers() {
-    return Hive.box<User>(user_list_box).values.toList().cast<User>();
+    return Hive.box<User>(user_list_box).values.toList();
   }
 
   Future deleteAllUsers () async{

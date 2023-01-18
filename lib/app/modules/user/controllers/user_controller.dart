@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 
 import '../../../../services/db_service.dart';
 import '../models/user.dart';
-import '../models/user_model.dart';
 import '../providers/user_provider.dart';
 
 class UserController extends GetxController {
   final UserProvider userProvider = UserProvider();
+  final searchTextController = TextEditingController();
 
   final ScrollController scrollController = ScrollController();
   final reachedMax = false.obs;
@@ -19,10 +19,15 @@ class UserController extends GetxController {
   final isLoadMoreUsers = false.obs;
   final isGridView = false.obs;
   var userList = <User>[].obs;
+  List<User> userListAlias = [];
 
   @override
   Future<void> onInit() async {
     getAllUsers();
+    searchTextController.addListener((){
+      List<User> filteredList = userListAlias.where((user) => user.name.toLowerCase().contains(searchTextController.text.toLowerCase())).toList();
+      userList.value = filteredList;
+    });
     super.onInit();
   }
 
@@ -39,10 +44,10 @@ class UserController extends GetxController {
   Future<void> getAllUsers({bool isLoading = true, bool isLoadMore = false}) async {
     isUserLoading(isLoading);
     isLoadMoreUsers(isLoadMore);
-    userProvider.getAllUsers(currentPage.value).then((value) {
-      if (!isLoadMore) {
-        AppDatabase().deleteAllUsers();
-      }
+    userProvider.getAllUsers(currentPage.value).then((value) async {
+
+      AppDatabase().deleteAllUsers();
+      List<User> tempUserList = [];
       for (var element in value) {
         final user = User()
           ..id = element.id??0
@@ -50,14 +55,18 @@ class UserController extends GetxController {
           ..name = element.login??""
           ..htmlUrl = element.htmlUrl??""
           ..favourite = false;
-        AppDatabase().addUser(user);
+        tempUserList.add(user);
       }
       reachedMax.value = (value == []);
-      userList.value = AppDatabase().getAllUsers();
+      userList.value = await AppDatabase().updateAllUsers(tempUserList);
+      userListAlias.clear();
+      userListAlias.addAll(userList);
       isUserLoading(false);
       isLoadMoreUsers(false);
     }).catchError((onError) {
       userList.value =  AppDatabase().getAllUsers();
+      userListAlias.clear();
+      userListAlias.addAll(userList);
       reachedMax(true);
       isUserLoading(false);
       isLoadMoreUsers(false);
@@ -66,7 +75,8 @@ class UserController extends GetxController {
 
   Future changetFavoriteStatus (User user) async {
     user.favourite = !user.favourite;
-    await AppDatabase().update(userList.value);
-    userList.value = AppDatabase().getAllUsers();
+    userList.value = await AppDatabase().updateAllUsers(userList);
+    userListAlias.clear();
+    userListAlias.addAll(userList);
   }
 }

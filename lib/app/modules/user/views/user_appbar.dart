@@ -4,13 +4,14 @@ import '../controllers/user_controller.dart';
 
 AppBar buildUserAppBar(UserController controller) {
   return AppBar(
-    leading: null,
+    automaticallyImplyLeading: false,
     title: SizedBox(
       height: 45,
       child: TextField(
-        onTap: () {
-         // controller.showSearchBar();
-        },
+        controller: controller.searchTextController,
+        // onChanged: (value) {
+        //   controller.search(value);
+        // },
         decoration: InputDecoration(
           prefixIcon: const Icon(
             Icons.search,
